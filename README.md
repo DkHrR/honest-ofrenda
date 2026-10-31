@@ -28,6 +28,13 @@ python -m ofrenda.cli my_facts/yourfile.txt --save out/yourfile.md
 ```
 Read every sentence yourself, and compare it with your facts because the checks catch only some changes. Note that your facts are sent to the Tinker hosted API. The tool has been run only on the two made-up samples, not on a real family's facts.
 
+## Local web page
+To use the browser interface, run:
+```bash
+python serve.py
+```
+Open http://127.0.0.1:5000 on the same computer. It runs only on your own computer and there is no live demo. The server handles one job at a time. The input limits are 12 facts, 200 characters per line, and 2000 characters in total. At least 4 facts besides the Name line are required. Your facts are sent to the Tinker hosted API to write the text.
+
 ## How the checks work
 - **Model generation**: An open-weight model (Qwen3-8B via Tinker) writes a warm first-person remembrance strictly constrained to the facts.
 - **Name and number check**: Plain code inspects the reply. Every number token and non-sentence-starting capitalized word must appear in the facts.
@@ -40,6 +47,7 @@ Read every sentence yourself, and compare it with your facts because the checks 
 - Small drift like "loved making puran poli" when the fact says "favourite food" is not caught.
 - The evidence view has false alarms (for example grammatical variants like "selling" vs "sold").
 - One real run took 46.00 s including a cold start and is not a benchmark.
+- With only one fact, the model invented a whole ritual, the checker said nothing was unsupported, and the evidence view marked 5 of 6 sentences as having no matching fact; this is why the page now asks for at least 4 facts.
 
 ## Data note
 The facts are sent to the Tinker hosted API, so do not use this for anything you would not send to a hosted service. The sample files represent made-up people.

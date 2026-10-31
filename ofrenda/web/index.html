@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>honest-ofrenda</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #120e0c;
+      color: #f5ede4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fbf5ef;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: #c7bbb0;
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .garland {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin: 24px auto 32px auto;
+    }
+    .garland-item {
+      display: inline-block;
+    }
+    .petal {
+      width: 14px;
+      height: 14px;
+      background: #e58229;
+      border-radius: 14px 0;
+      transform: rotate(45deg);
+      opacity: 0.9;
+    }
+    .picado {
+      width: 14px;
+      height: 16px;
+      background: #d8b168;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+      opacity: 0.85;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f0e6dc;
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      background: #191411;
+      border: 1px solid #33261f;
+      border-radius: 8px;
+      color: #f5ede4;
+      font-family: inherit;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      padding: 16px;
+      resize: vertical;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #e58229;
+    }
+    .btn-primary {
+      background-color: #e58229;
+      color: #120e0c;
+      border: none;
+      padding: 12px 26px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background-color: transparent;
+      color: #e58229;
+      border: 1px solid #e58229;
+      padding: 10px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 24px;
+    }
+    .notice-text {
+      font-size: 0.92rem;
+      color: #d6ccc2;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+    .loading-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      background: #191411;
+      border: 1px solid #33261f;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .flame {
+      width: 14px;
+      height: 22px;
+      background: radial-gradient(ellipse at bottom, #ffe89e 20%, #f39c12 60%, #e67e22 90%);
+      border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+      box-shadow: 0 0 16px 4px rgba(229, 130, 41, 0.45);
+      animation: candlePulse 2s infinite ease-in-out;
+      transform-origin: 50% 90%;
+      margin-bottom: 12px;
+    }
+    @keyframes candlePulse {
+      0%, 100% {
+        transform: scale(0.95);
+        opacity: 0.85;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+    }
+    .loading-text {
+      font-size: 0.95rem;
+      color: #d8b168;
+    }
+    .warning-card {
+      background: #1f1610;
+      border: 2px solid #e58229;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 16px rgba(229, 130, 41, 0.12);
+    }
+    .warning-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #e58229;
+      margin-bottom: 10px;
+    }
+    .warning-item {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fbf5ef;
+      margin-bottom: 6px;
+    }
+    h2.ofrenda-heading {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: #f8eee2;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: #181310;
+      border: 1px solid #2e231c;
+      border-radius: 8px;
+      padding: 22px 24px;
+      margin-bottom: 22px;
+    }
+    .remembrance-card {
+      background: #1c1511;
+      border: 1px solid #3c2d23;
+      padding: 26px 28px;
+    }
+    .remembrance-text {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      font-size: 1.22rem;
+      line-height: 1.8;
+      color: #faede0;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f5ede4;
+      margin-bottom: 14px;
+    }
+    .facts-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .facts-list li {
+      font-size: 0.95rem;
+      color: #d6ccc2;
+      padding-left: 18px;
+      position: relative;
+    }
+    .facts-list li::before {
+      content: "•";
+      position: absolute;
+      left: 2px;
+      color: #e58229;
+    }
+    .checks-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .checks-list li {
+      font-size: 0.95rem;
+      color: #e4d8cd;
+    }
+    .evidence-note {
+      font-size: 0.88rem;
+      color: #a89a8e;
+      margin-top: -6px;
+      margin-bottom: 18px;
+      font-style: italic;
+    }
+    .evidence-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .evidence-row {
+      padding-bottom: 16px;
+      border-bottom: 1px solid #281e18;
+    }
+    .evidence-row:last-child {
+      border-bottom: none;
+    }
+    .ev-sentence {
+      font-size: 0.95rem;
+      color: #f5ede4;
+      margin-bottom: 6px;
+    }
+    .ev-meta {
+      font-size: 0.88rem;
+      color: #b0a295;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .ev-pills-wrap {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 3px;
+    }
+    .pill {
+      display: inline-block;
+      background: #2b2019;
+      color: #e8a867;
+      border: 1px solid #4a3424;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      padding: 1px 9px;
+    }
+    .pill-none {
+      color: #877b70;
+      font-size: 0.84rem;
+    }
+    .error-box {
+      background: #261611;
+      border: 1px solid #7d3522;
+      color: #f5b1a4;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background: #2b221c;
+      margin: 16px 0 32px 0;
+      width: 100%;
+    }
+    footer {
+      font-size: 0.92rem;
+      color: #d6ccc2;
+      line-height: 1.6;
+      text-align: center;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>honest-ofrenda</h1>
+      <p class="subtitle">Type facts about someone you remember. An open model writes a short remembrance. Plain code flags what it added.</p>
+      <div class="garland" aria-hidden="true">
+        <span class="garland-item petal"></span>
+        <span class="garland-item picado"></span>
+        <span class="garland-item petal"></span>
+        <span class="garland-item picado"></span>
+        <span class="garland-item petal"></span>
+        <span class="garland-item picado"></span>
+        <span class="garland-item petal"></span>
+      </div>
+    </header>
+
+    <main id="app-content">
+      <!-- Content populated by script -->
+    </main>
+
+    <hr>
+    <footer>
+      Written by an open-weight model (Qwen3-8B via Tinker). Plain code checks names, numbers and a few soft words only. Read every line yourself.
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const app = document.getElementById("app-content");
+      let pollTimer = null;
+
+      function clearApp() {
+        while (app.firstChild) {
+          app.removeChild(app.firstChild);
+        }
+      }
+
+      function showStart(initialText, errorMessage) {
+        if (pollTimer) {
+          clearInterval(pollTimer);
+          pollTimer = null;
+        }
+        clearApp();
+
+        if (errorMessage) {
+          const errBox = document.createElement("div");
+          errBox.className = "error-box";
+          errBox.textContent = errorMessage;
+          app.appendChild(errBox);
+        }
+
+        const formGroup = document.createElement("div");
+        formGroup.className = "form-group";
+
+        const label = document.createElement("label");
+        label.setAttribute("for", "facts-input");
+        label.textContent = "Facts, one per line";
+        formGroup.appendChild(label);
+
+        const textarea = document.createElement("textarea");
+        textarea.id = "facts-input";
+        textarea.placeholder = "Name: Sunanda Kulkarni\nRelationship to the writer: grandmother, called Aaji\nShe was born in 1948 in Nashik.\nShe sold bangles at the market for 31 years.\nHer favourite food was puran poli.";
+        if (initialText) {
+          textarea.value = initialText;
+        }
+        formGroup.appendChild(textarea);
+        app.appendChild(formGroup);
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn-primary";
+        btn.textContent = "Write remembrance";
+        btn.addEventListener("click", function () {
+          const val = textarea.value.trim();
+          if (!val) {
+            return;
+          }
+          startPipeline(val);
+        });
+        app.appendChild(btn);
+
+        const note = document.createElement("p");
+        note.className = "notice-text";
+        note.textContent = "Your facts are sent to a hosted service (Tinker) to write the text. Do not enter anything you would not send to one.";
+        app.appendChild(note);
+      }
+
+      function showLoading(currentText) {
+        clearApp();
+
+        const formGroup = document.createElement("div");
+        formGroup.className = "form-group";
+
+        const label = document.createElement("label");
+        label.textContent = "Facts, one per line";
+        formGroup.appendChild(label);
+
+        const textarea = document.createElement("textarea");
+        textarea.disabled = true;
+        textarea.value = currentText;
+        formGroup.appendChild(textarea);
+        app.appendChild(formGroup);
+
+        const loadingBox = document.createElement("div");
+        loadingBox.className = "loading-box";
+
+        const flame = document.createElement("div");
+        flame.className = "flame";
+        loadingBox.appendChild(flame);
+
+        const txt = document.createElement("div");
+        txt.className = "loading-text";
+        txt.textContent = "Writing... the first run can take about a minute.";
+        loadingBox.appendChild(txt);
+
+        app.appendChild(loadingBox);
+
+        const note = document.createElement("p");
+        note.className = "notice-text";
+        note.textContent = "Your facts are sent to a hosted service (Tinker) to write the text. Do not enter anything you would not send to one.";
+        app.appendChild(note);
+      }
+
+      function showError(msg, currentText) {
+        showStart(currentText, msg);
+      }
+
+      function showResults(data) {
+        clearApp();
+
+        if (data.problems && data.problems.length > 0) {
+          const warnCard = document.createElement("div");
+          warnCard.className = "warning-card";
+
+          const warnTitle = document.createElement("div");
+          warnTitle.className = "warning-title";
+          warnTitle.textContent = "Needs your check";
+          warnCard.appendChild(warnTitle);
+
+          data.problems.forEach(function (prob) {
+            const item = document.createElement("div");
+            item.className = "warning-item";
+            item.textContent = "Checker: FLAGGED - " + prob.kind + ": " + prob.text;
+            warnCard.appendChild(item);
+          });
+
+          app.appendChild(warnCard);
+        }
+
+        const heading = document.createElement("h2");
+        heading.className = "ofrenda-heading";
+        heading.textContent = "Ofrenda for " + data.name;
+        app.appendChild(heading);
+
+        const remCard = document.createElement("div");
+        remCard.className = "card remembrance-card";
+        const remP = document.createElement("p");
+        remP.className = "remembrance-text";
+        remP.textContent = data.remembrance;
+        remCard.appendChild(remP);
+        app.appendChild(remCard);
+
+        const toldCard = document.createElement("div");
+        toldCard.className = "card";
+        const toldTitle = document.createElement("h3");
+        toldTitle.className = "card-title";
+        toldTitle.textContent = "What you told me";
+        toldCard.appendChild(toldTitle);
+
+        const toldList = document.createElement("ul");
+        toldList.className = "facts-list";
+        (data.facts || []).forEach(function (fact) {
+          if (fact.toLowerCase().startsWith("name:")) {
+            return;
+          }
+          const li = document.createElement("li");
+          li.textContent = fact;
+          toldList.appendChild(li);
+        });
+        toldCard.appendChild(toldList);
+        app.appendChild(toldCard);
+
+        const checksCard = document.createElement("div");
+        checksCard.className = "card";
+        const checksTitle = document.createElement("h3");
+        checksTitle.className = "card-title";
+        checksTitle.textContent = "Checks";
+        checksCard.appendChild(checksTitle);
+
+        const checksList = document.createElement("ul");
+        checksList.className = "checks-list";
+
+        const chLi1 = document.createElement("li");
+        chLi1.textContent = data.checker_line;
+        checksList.appendChild(chLi1);
+
+        const chLi2 = document.createElement("li");
+        chLi2.textContent = data.review_line;
+        checksList.appendChild(chLi2);
+
+        if (data.unmatched_sentences && data.unmatched_sentences > 0) {
+          const chLi3 = document.createElement("li");
+          chLi3.textContent = "Sentences with no matching fact: " + data.unmatched_sentences + " of " + data.total_sentences + ". Read these first.";
+          checksList.appendChild(chLi3);
+        }
+
+        checksCard.appendChild(checksList);
+        app.appendChild(checksCard);
+
+        const evCard = document.createElement("div");
+        evCard.className = "card";
+        const evTitle = document.createElement("h3");
+        evTitle.className = "card-title";
+        evTitle.textContent = "Evidence view (for review by hand)";
+        evCard.appendChild(evTitle);
+
+        const evNote = document.createElement("p");
+        evNote.className = "evidence-note";
+        evNote.textContent = "This view has false alarms. It does not prove anything.";
+        evCard.appendChild(evNote);
+
+        const evRows = document.createElement("div");
+        evRows.className = "evidence-rows";
+
+        (data.evidence || []).forEach(function (item, idx) {
+          const row = document.createElement("div");
+          row.className = "evidence-row";
+
+          const sent = document.createElement("div");
+          sent.className = "ev-sentence";
+          sent.textContent = (idx + 1) + '. "' + item.sentence + '"';
+          row.appendChild(sent);
+
+          const meta = document.createElement("div");
+          meta.className = "ev-meta";
+
+          const closest = document.createElement("div");
+          closest.className = "ev-closest";
+          closest.textContent = "closest fact: " + item.best_fact;
+          meta.appendChild(closest);
+
+          const pillsWrap = document.createElement("div");
+          pillsWrap.className = "ev-pills-wrap";
+
+          const pillsLabel = document.createElement("span");
+          pillsLabel.textContent = "words in no fact: ";
+          pillsWrap.appendChild(pillsLabel);
+
+          if (item.unmatched_words && item.unmatched_words.length > 0) {
+            item.unmatched_words.forEach(function (w) {
+              const pill = document.createElement("span");
+              pill.className = "pill";
+              pill.textContent = w;
+              pillsWrap.appendChild(pill);
+            });
+          } else {
+            const noneSpan = document.createElement("span");
+            noneSpan.className = "pill-none";
+            noneSpan.textContent = "none";
+            pillsWrap.appendChild(noneSpan);
+          }
+
+          meta.appendChild(pillsWrap);
+          row.appendChild(meta);
+          evRows.appendChild(row);
+        });
+
+        evCard.appendChild(evRows);
+        app.appendChild(evCard);
+
+        const resetBtn = document.createElement("button");
+        resetBtn.type = "button";
+        resetBtn.className = "btn-secondary";
+        resetBtn.textContent = "Start over";
+        resetBtn.addEventListener("click", function () {
+          showStart("");
+        });
+        app.appendChild(resetBtn);
+      }
+
+      function startPipeline(facts) {
+        showLoading(facts);
+
+        fetch("/start", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ facts: facts })
+        })
+          .then(function (res) {
+            if (res.status === 429) {
+              throw new Error("A task is already running. Please wait a moment.");
+            }
+            if (res.status === 501) {
+              throw new Error("Pipeline is not wired yet.");
+            }
+            if (!res.ok) {
+              throw new Error("Could not start task (" + res.status + ").");
+            }
+            return res.json();
+          })
+          .then(function (resp) {
+            const jobId = resp.id;
+            pollTimer = setInterval(function () {
+              fetch("/status/" + encodeURIComponent(jobId))
+                .then(function (sRes) {
+                  return sRes.json();
+                })
+                .then(function (sData) {
+                  if (sData.state === "done") {
+                    clearInterval(pollTimer);
+                    pollTimer = null;
+                    showResults(sData);
+                  } else if (sData.state === "error") {
+                    clearInterval(pollTimer);
+                    pollTimer = null;
+                    showError(sData.message || "An error occurred during generation.", facts);
+                  }
+                })
+                .catch(function (err) {
+                  clearInterval(pollTimer);
+                  pollTimer = null;
+                  showError("Failed to check status: " + err.message, facts);
+                });
+            }, 2000);
+          })
+          .catch(function (err) {
+            showError(err.message, facts);
+          });
+      }
+
+      showStart("");
+    })();
+  </script>
+</body>
+</html>
