@@ -1,0 +1,9 @@
+# Replace every line below with a fact about the person you remember. One fact per line.
+# Lines starting with # are ignored. Keep 6 to 8 facts. Do not put instructions in this file.
+Name: (their name)
+Relationship to the writer: (for example grandmother, called Aaji)
+(a fact with a year or a place)
+(a fact with a number)
+(their favourite food)
+(a song, a habit or a saying)
+(a story in one line)

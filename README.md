@@ -20,6 +20,14 @@ Run the tool:
 python -m ofrenda.cli samples/sunanda.txt --save out/sunanda.md
 ```
 
+## Use it for someone you remember
+Copy `samples/template.txt` into a folder named `my_facts/` (which is git-ignored), and fill in 6 to 8 facts about the person.
+Run the tool:
+```bash
+python -m ofrenda.cli my_facts/yourfile.txt --save out/yourfile.md
+```
+Read every sentence yourself, and compare it with your facts because the checks catch only some changes. Note that your facts are sent to the Tinker hosted API. The tool has been run only on the two made-up samples, not on a real family's facts.
+
 ## How the checks work
 - **Model generation**: An open-weight model (Qwen3-8B via Tinker) writes a warm first-person remembrance strictly constrained to the facts.
 - **Name and number check**: Plain code inspects the reply. Every number token and non-sentence-starting capitalized word must appear in the facts.
